@@ -21,8 +21,8 @@ Application web de vente en ligne de produits alimentaires, construite avec le f
 
 - Démarrez le serveur de développement :
     Ouvrir le terminal et naviguez vers le répértoire où vous avez placé le projet et taper la commande :
-    symfony server:start (recommandé)
-    php -S localhost:8000 -t public
+    . symfony server:start (recommandé)
+    . php -S localhost:8000 -t public
 
 ## Utilisation
 - Accédez à l'application via `http://localhost:8000` (ou une autre URL spécifiée par le serveur Symfony).
