@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Les articles {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="container-fluid d-flex align-items-center justify-content-between flex-row">
+            <h2 class="my-5 title align-self-start">Les <span>ar</span>ticles</h2>
+            <a href="{{path('admin.articles.create')}}" class="btn btn-secondary">Ajouter un nouvel article</a>
+        </div>
+        <div class="container-fluid d-flex align-items-center justify-content-center flex-column">
+
+            <div class="container">
+                {% for type, message in app.flashes %}
+                    <div style="text-align:center;" class="container d-flex align-items-center justify-content-center alert alert-{{type}}">
+                        {{ message | join('.') }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="container mb-4">
+                <h3 style="text-align:center; font-weight:200; font-size:17Px">Vous avez au total {{ count }} article{% if (count > 1) %}s {% endif %}</h3>
+            </div>
+            <table class="my-3 table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Catégorie associée</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for article in articles %}
+                        <tr>
+                            <td><img src="/image/articles/{{ article.image }}" width="40px" height="40px"></td>
+                            <td>{{ article.name }}</td>
+                            <td class="fw-bolder">{{ article.price | number_format(2, ',', ' ') }} €</td>
+                            <td>{{ article.category.name | default('') }}</td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a href="{{ path('admin.articles.edit', {id: article.id}) }}" class="btn btn-primary">Editer</a>
+                                    <form action="{{path('admin.articles.delete', {id: article.id})}}" method="post">
+                                        <input type="hidden" value="delete" name="_method">
+                                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="my-2 container d-flex align-items-center justify-content-center gap-1 liens align-self-start">
+                {% for i in 1..maxPages %}
+                    <a href="{{ path('admin.articles.index', {page: i}) }}" class="lien {% if (page == i) %} now {% endif %}">{{ i }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

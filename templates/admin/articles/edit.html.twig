@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+{% block title %} {{ article.name }} {% endblock %}
+{% block body %}
+     <div class="container my-5">
+          {{form_start(form)}}
+               <div class="container d-flex align-items-center justify-content-center gap-2">
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name) }}
+               </div>
+               <div class="container d-flex align-items-center justify-content-center gap-2">
+                    {{ form_label(form.price) }}
+                    {{ form_widget(form.price) }}
+               </div>
+               <div class="container d-flex align-items-center justify-content-center gap-2">
+                    {{ form_label(form.category) }}
+                    {{ form_widget(form.category) }}
+               </div>
+               <div class="container d-flex align-items-center justify-content-center gap-2">
+                    {{ form_label(form.imageFile) }}
+                    {{ form_widget(form.imageFile) }}
+               </div>
+               {{form_rest(form)}}
+          {{form_end(form)}}
+     </div>
+{% endblock %}

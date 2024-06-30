@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Les catégories {% endblock %}
+
+{% block body %}
+<div class="container">
+        <div class="container-fluid d-flex align-items-center justify-content-between flex-row">
+            <h2 class="my-5 title align-self-start">Les <span>cat</span>égories</h2>
+            <a href="{{path('admin.category.create')}}" class="btn btn-secondary">Ajouter une nouvelle catégorie</a>
+        </div>
+        <div class="container-fluid d-flex align-items-center justify-content-center flex-column">
+            <div class="container">
+                {% for type, message in app.flashes %}
+                    <div style="text-align:center;" class="container d-flex align-items-center justify-content-center alert alert-{{type}}">
+                        {{ message | join('.') }}
+                    </div>
+                {% endfor %}
+            </div>
+            <table class="container my-3 table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th style="width:300px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                        <tr>
+                            <td>{{ category.name }}</td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a href="{{ path('admin.category.edit', {id: category.id}) }}" class="btn btn-primary">Editer</a>
+                                    <form action="{{path('admin.category.delete', {id: category.id})}}" method="post">
+                                        <input type="hidden" value="delete" name="_method">
+                                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {# <div class="my-5 container d-flex align-items-center justify-content-center gap-1 liens">
+                {% for i in 1..maxPages %}
+                    <a href="{{ path('admin.category.index', {page: i}) }}" class="lien {% if (page == i) %} now {% endif %}">{{ i }}</a>
+                {% endfor %}
+            </div> #}
+        </div>
+    </div>
+{% endblock %}

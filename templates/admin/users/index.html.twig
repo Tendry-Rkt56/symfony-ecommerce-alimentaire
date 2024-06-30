@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+{% block title %} Les utilisateurs {% endblock %}
+{% block body %}
+
+     <div class="container">
+             <div class="container-fluid d-flex align-items-center justify-content-between flex-row">
+                 <h2 class="my-5 title align-self-start">Les <span>uti</span>lisateurs</h2>
+                 <a href="{{path('admin.users.create')}}" class="btn btn-secondary">Créer un nouvel administrateur</a>
+             </div>
+             <div class="container-fluid d-flex align-items-center justify-content-center flex-column">
+                 <div class="container">
+                     {% for type, message in app.flashes %}
+                         <div style="text-align:center;" class="container d-flex align-items-center justify-content-center alert alert-{{type}}">
+                             {{ message | join('.') }}
+                         </div>
+                     {% endfor %}
+                 </div>
+                 <table class="container my-3 table table-striped">
+                     <thead class="table-dark">
+                         <tr>
+                              <th></th>
+                              <th>Nom</th>
+                              <th>Prénom</th>
+                              <th>Rôles</th>
+                              <th></th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         {% for user in users %}
+                             <tr>
+                                   <td>
+                                        <img src="/image/users/{{ user.image is not empty ? user.image : '1077114.png' }}" alt="" height="40px" width="40px" style="border-radius:50%;">
+                                    </td>
+                                   <td class="fw-bold">{{ user.name }}</td>
+                                   <td>{{ user.prenom }}</td>
+                                   <td class="fw-bolder">{{ 'ROLE_ADMIN' in user.roles ? 'Administrateur' : 'Utilisateur' }}</td>
+                                   <td>
+                                        <div class="d-flex gap-1">
+                                            <a href="{{path('user.profil.index', {id: user.id})}}" class="btn btn-primary">Voir le profil</a>
+                                            <form method="POST" action="{{path('admin.users.delete', {id: user.id})}}">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                            </form>
+                                        </div>
+                                   </td>
+                             </tr>
+                         {% endfor %}
+                     </tbody>
+                 </table>
+                 <div class="my-5 container d-flex align-items-center justify-content-center gap-1 liens">
+                     {% for i in 1..maxPages %}
+                         <a href="{{ path('admin.users.index', {page: i}) }}" class="lien {% if (page == i) %} now {% endif %}">{{ i }}</a>
+                     {% endfor %}
+                 </div>
+             </div>
+     </div>
+
+{% endblock %}

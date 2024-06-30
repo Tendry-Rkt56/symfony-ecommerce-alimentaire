@@ -1,0 +1,41 @@
+{% extends "main.html.twig" %}
+{% block title %} Edition de profil {% endblock %}
+{% block body %}
+
+     {{ form_start(form) }}
+          <div class="container">
+               {% for type, message in app.flashes %}
+                    <p class="alert alert-{{ type }} d-flex align-items-center justify-content-center flex-row">{{ message | join('') }}</p>
+               {% endfor %}
+          </div>
+          <h1 class="mb-5" style="font-weight:50; letter-spacing:2px"><span style="padding-bottom:1px; border-bottom:2px solid blueviolet;">Cr</span>éation </h1>
+          <div class="m-2 container-fluid row d-flex align-items-center justify-content-center">
+               <div class="container-fluid col-sm-6 d-flex align-items-center justify-content-center flex-row">
+                    <div style="width:40%">{{ form_label(form.name, 'Votre nom:') }}</div>
+                    <div style="width:60%">{{ form_widget(form.name) }}</div>
+               </div>
+               <div class="container-fluid col-sm-6 d-flex align-items-center justify-content-center flex-row">
+                    <div style="width:40%">{{ form_label(form.prenom, 'Votre prénom:') }}</div>
+                    <div style="width:60%">{{ form_widget(form.prenom) }}</div>
+               </div>
+          </div>
+          <div class="m-2 container-fluid row d-flex align-items-center justify-content-center">
+               <div class="container-fluid col-sm-6 d-flex align-items-center justify-content-center flex-row">
+                    <div style="width:40%">{{ form_label(form.email, 'Votre email:') }}</div>
+                    <div style="width:60%">{{ form_widget(form.email) }}</div>
+               </div>
+               <div class="container-fluid col-sm-6 d-flex align-items-center justify-content-center flex-row">
+                    <div style="width:40%">{{ form_label(form.passwords, 'Votre mot de passe:') }}</div>
+                    <div style="width:60%">{{ form_widget(form.passwords) }}</div>
+               </div>
+          </div>
+          <div class="m-2 mb-4 container-fluid row d-flex align-items-center justify-content-center">
+               <div class="container-fluid col-sm-6 d-flex align-items-center justify-content-center flex-row">
+                    <div style="width:40%">{{ form_label(form.imageFile, 'Image:') }}</div>
+                    <div style="width:60%">{{ form_widget(form.imageFile) }}</div>
+               </div>
+          </div>
+          {{ form_rest(form) }}
+     {{ form_end(form) }}
+
+{% endblock %}

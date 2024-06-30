@@ -1,0 +1,70 @@
+{% extends 'main.html.twig' %}
+
+{% block title %} Les articles {% endblock %}
+
+{% block javascripts %}
+
+     <script src="{{asset('script/panier.js')}}" defer></script>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="container-fluid d-flex align-items-center justify-content-between flex-row">
+            <h2 class="my-5 title align-self-start">Votre <span>pa</span>nier</h2>
+        </div>
+        {% if paniers is not empty %}
+            <div class="container-fluid d-flex align-items-center justify-content-center flex-column">
+
+                <div class="container mb-4">
+                   <h3 style="text-align:center; font-weight:200; font-size:17Px">
+                        Le total de votre panier est pour l'instant de <span style="color:#0d6efd;font-weight:bolder">{{ total | number_format(2,',',' ') }} €</span>
+                   </h3>
+                </div>
+                <table class="my-3 table table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nom</th>
+                            <th>Prix</th>
+                            <th>Catégorie associée</th>
+                            <th>Nombre</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in articles %}
+                            <tr>
+                                <td><img src="/image/articles/{{ article.image }}" width="40px" height="40px"></td>
+                                <td>{{ article.name }}</td>
+                                <td class="fw-bolder">{{ article.price | number_format(2, ',', ' ')}} €</td>
+                                <td>{{ article.category.name | default('') }}</td>
+                                <td>{{ paniers[article.id] }}</td>
+                                <td>
+                                    <div class="d-flex gap-1">
+                                        <form action="{{path('articles.panier.delete', {id: article.id})}}" method="post">
+                                            <input type="hidden" value="delete" name="_method">
+                                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="my-4 container d-flex align-items-center justify-content-center gap-1 liens align-self-start">
+                   <form action="{{ path('articles.panier.store') }}" id="form-commandes" method="POST" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary">Commander</button>
+                   </form>
+                   {% if app.user %}
+                        <p style="display: none;" id="validation">Bonjour le monde</p>
+                   {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <div class=" mt-5 alert alert-info d-flex align-items-center justify-content-center">Votre panier est encore vide</div>
+        {% endif %}
+        
+    </div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Commandes {% endblock %}
+
+{% block javascripts %}
+
+     <script src="{{asset('script/commandes.js')}}" defer></script>
+
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="container-fluid d-flex align-items-center justify-content-between flex-row">
+            <h2 class="my-5 title align-self-start">Commande de: <span class="fw-bolder">{{ commande.user.name }} {{ commande.user.prenom }}</span></h2>
+        </div>
+        <div class="container-fluid d-flex align-items-center justify-content-center flex-column">
+            <div class="d-flex flex-row align-items-center justify-content-between container mb-4">
+                <h3 style="text-align:center; font-weight:200; font-size:17Px">Total de cette commande <span style="color:#0d6efd" class="fw-bolder">{{ total | number_format('2', ',', ' ') }} €</span></h3>
+                <div class="d-flex flex-row align-items-center justify-content-between gap-4">
+                    <p class="phrase">{% if commande.finished == 1 %} Commande effectuée {% else %} Commande non effectuée {% endif %}</p>
+                    <p style="display: none;" class="commandeId">{{ commande.id }}</p>
+                    <input id="check" type="checkbox" name="check" {{ commande.finished == 1 ? 'checked' : '' }}>
+                </div>
+            </div>
+            <table class="my-3 table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Catégorie associée</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detail in details %}
+                        <tr>
+                            <td><img src="/image/articles/{{ detail.articles.image }}" width="40px" height="40px"></td>
+                            <td>{{ detail.articles.name }}</td>
+                            <td class="fw-bolder">{{ detail.articles.price | number_format(2, ',', ' ')}} €</td>
+                            <td>{{ detail.articles.category.name | default('') }}</td>
+                            <td>{{ detail.nombre }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+        </div>
+    </div>
+{% endblock %}

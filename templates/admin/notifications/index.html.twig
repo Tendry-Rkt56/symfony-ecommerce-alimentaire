@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Les commndes {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="container-fluid d-flex align-items-center justify-content-between flex-row">
+            <h2 class="my-5 title align-self-start"><span>Noti</span>fications</h2>
+        </div>
+        <div class="container-fluid d-flex align-items-center justify-content-center flex-column">
+            <div class="container">
+                {% for type, message in app.flashes %}
+                    <div style="text-align:center;" class="container d-flex align-items-center justify-content-center alert alert-{{type}}">
+                        {{ message | join('.') }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="container mb-4">
+                {% if notRead > 0 %}
+                    <h3 style="text-align:center; font-weight:200; font-size:17Px">Vous avez <span class="fw-bolder">{{ notRead }}</span> commande{% if (notRead > 1) %}s {% endif %} non effectuée{% if (notRead > 1) %}s {% endif %}</h3>
+                {% endif %}
+                
+            </div>
+            {% if notifications is not empty %}
+                <table class="my-3 table table-striped">
+                    <tbody>
+                        {% for notification in notifications %}
+                            <tr>
+                                <td class="fw-bolder">{{ notification.createdAt | date('d/m/Y') }}</td>
+                                <td class="fw-bold">{{ notification.valeur }}</td>
+                                <td class="fw-bolder">
+                                    {% if notification.commande.finished == 1 %}
+                                        <img src="/image/icon/correct.png" width="20px" height="20px">
+                                    {% else %}
+                                        <img src="/image/icon/false2.png" width="20px" height="20px">
+                                    {% endif %}
+
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-1">
+                                        <a href="{{ path('admin.commandes.commande', {id: notification.commande.id}) }}" class="btn btn-primary">Détails</a>
+                                        <form action="{{path('admin.notifications.delete', {id: notification.id})}}" method="post">
+                                            <input type="hidden" value="delete" name="_method">
+                                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="container alert alert-warning d-flex align-items-center justify-content-center">Pas de nouvelles commandes ...</div>
+            {% endif %}
+            
+        </div>
+    </div>
+{% endblock %}

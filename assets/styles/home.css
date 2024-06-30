@@ -1,0 +1,106 @@
+* {
+     margin:0;
+     padding:0;
+     box-sizing:border-box;
+}
+
+html {
+     scroll-behavior: smooth;
+}
+
+header {
+    background-image: url('/image/Background-2.webp');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    width:100%;
+    height: 100vh;
+}
+
+header .entete {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background:white;
+    padding:10px 0;
+    z-index: 1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 0 5px rgba(0,0,0,0.3);
+}
+
+header .entete .logo {
+     width:20%;
+     margin:0 20px;
+}
+
+header .entete .logo h3 {
+    font-weight:50;
+    font-family:monospace;
+    font-size:20px;
+    color:#262626;
+}
+
+header .entete .logo h3 span {
+    color:blue;
+    font-weight:200;
+}
+header .entete .navig {
+    width:50%;
+}
+
+header .entete .navig .pages {
+    color:#262626;
+    text-decoration: none;
+    margin:0 10px;
+}
+
+header .texte {
+     position:absolute;
+     top:50%;
+     left:50%;
+     transform:translate(-50%,-50%);
+     display:flex;
+     align-items:center;
+     justify-content:space-evenly;
+     width:80%;
+}
+
+header .texte .box {
+    padding:20px 50px;
+    border-radius:8px;
+    border:1px solid whitesmoke;
+    background-color:white;
+    opacity:0.8;
+    box-shadow:0 0 10px rgba(0,0,0,0.3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    width:70%;
+    max-width:40%;
+    overflow-wrap:break-word;
+}
+
+header .texte .box p {
+    font-weight:bolder; 
+    color:#262626;
+    font-size:17px;
+    font-family:monospace;
+    letter-spacing:3px;
+}
+
+header .texte .box button {
+    background:orange;
+    font-size:20px;
+    border:none;
+    border-radius:10px;
+    padding:10px 20px;
+    margin:20px 0;
+    color:white;
+    font-family:monospace;
+    letter-spacing:2px;
+    transition:0.4s ease;
+}

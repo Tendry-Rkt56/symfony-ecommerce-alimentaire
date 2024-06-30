@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="stylesheet" href="{{asset('styles/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('styles/main.css')}}">
+        <script src="{{ asset('script/base.js') }}" defer></script>
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <h3><span>Re</span>Sto</h3>
+            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <form class="search d-flex align-items-center justify-content-center flex-row gap-2">
+                    <select id="select" class="form-select">
+                        <option class="options" value="">Séléctionner une page de votre choix</option>
+                        <option class="options" value="1">Administration</option>
+                        <option class="options" value="2">Utilisateur</option>
+                    </select>
+                </form>
+            {% endif %}
+            <div class="navig d-flex align-items-center justify-content-center flex-row gap-2">
+               <a class="pages" style="{{app.current_route == 'articles.index' ? 'color:blue' : ''}}" class="" href="{{ path('articles.index') }}">Nos articles</a>
+               <a class="pages" style="{{app.current_route starts with 'articles.paniers' ? 'color:blue' : ''}}" class="" href="{{ path('articles.paniers') }}">Votre panier</a>
+               {% if app.user %}
+                    <a class="pages" href="{{ path('user.profil.main') }}">Votre profil</a>
+               {% endif %}
+               {% if app.user %}
+                   <form action="{{path('app.logout')}}" method="POST">
+                       <input type="submit" class="btn btn-outline-danger" value="Se déconnecter">
+                   </form>
+               {% else %}
+                   <a href="{{path('app.login')}}" class="btn btn-primary">Se connecter</a>
+               {% endif %}
+                
+            </div>
+        </header>
+        <div class="containers container-fluid">
+            {% block body %}{% endblock %}
+        </div>
+    </body>
+</html>

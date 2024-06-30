@@ -1,0 +1,34 @@
+{% extends 'main.html.twig' %}
+
+{% block title %} Les articles {% endblock %}
+
+{% block body %}    
+    <h2 class="title m-5 align-self-start">Les <span>ar</span>ticles</h2>
+    <div class="container">
+        {% for type, message in app.flashes %}
+            <div style="text-align:center;" class="container d-flex align-items-center justify-content-center alert alert-{{type}}">
+                {{ message | join('.') }}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="flex-wrap my-5 gap-3 container-fluid d-flex align-items-center justify-content-center">
+        {% for article in articles %}
+            <div class="article d-flex align-items-center justify-content-center flex-row">
+                <img src="/image/articles/{{article.image}}" alt="" class="image">
+                <div class="mx-2 d-flex align-items-center justify-content-center flex-column gap-2 article-info">
+                    <h3>{{ article.name }}</h3>
+                    <h4>Prix:  <span style="font-weight:bolder">{{ article.price | number_format(2, ',', ' ') }} €</span></h4>
+                    <h4>Categorie: <span style="font-weight:bolder">{{ article.category.name | default('') }}</span></h4>
+                    <a href="{{ path('articles.panier.add', {id: article.id}) }}" class="btn btn-outline-primary">Ajouter au panier</a>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="my-2 container d-flex align-items-center justify-content-center gap-1 liens align-self-start">
+            {% for i in 1..maxPages %}
+                <a href="{{ path('articles.index', {page: i}) }}" class="lien {% if (page == i) %} now {% endif %}">{{ i }}</a>
+            {% endfor %}
+        </div>
+
+    </div>  
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block title %} Creation de catégories {% endblock %}
+{% block body %}
+     <div class="container my-5">
+          {{form_start(form)}}
+               <div class="container d-flex align-items-center justify-content-center gap-2">
+                    {{ form_row(form.name) }}
+               </div>
+               {{ form_rest(form) }}
+          {{form_end(form)}}
+     </div>
+{% endblock %}

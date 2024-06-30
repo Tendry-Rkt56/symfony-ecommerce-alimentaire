@@ -1,0 +1,42 @@
+{% extends 'main.html.twig' %}
+
+{% block title %} Connexion {% endblock %}
+
+{% block body %}
+<form method="post" class="forms d-flex align-items-center justify-content-center flex-column">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app.logout') }}">Logout</a>
+        </div>
+    {% endif %}
+
+    <h1 class="h3 mb-3 font-weight-normal mb-4">Please <span style="padding-bottom:2px; border-bottom:2px solid blueviolet">si</span>gn in</h1>
+    <div class="container d-flex align-items-center justify-content-center flex-row gap-2 my-2">
+        <label class="fw-bolder" style="width:30%" for="inputEmail">Email: </label>
+        <input style="width:70%;" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+    </div>
+    <div class="container d-flex align-items-center justify-content-center flex-row gap-2">
+        <label class="fw-bolder" style="width:30%" for="inputPassword">Password: </label>
+        <input style="width:70%" type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+    </div>
+
+    <input type="hidden" name="_csrf_token"
+        value="{{ csrf_token('authenticate') }}"
+    >
+
+    <div class="checkbox my-3">
+        <label>
+            <input type="checkbox" name="_remember_me"> Remember me
+        </label>
+    </div>
+
+    <button class="btn btn-xs btn-primary" type="submit">
+        Connexion
+    </button>
+    <a href="{{ path('user.profil.create') }}" class="mt-3 btn btn-outline-secondary btn-sm">Créer un compte</a>
+</form>
+{% endblock %}
