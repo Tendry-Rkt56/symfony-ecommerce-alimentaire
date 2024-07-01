@@ -28,7 +28,7 @@ Application web de vente en ligne de produits alimentaires, construite avec le f
 - Accédez à l'application via `http://localhost:8000` (ou une autre URL spécifiée par le serveur Symfony).
 - Inscrivez-vous ou connectez-vous pour accéder à votre compte utilisateur.
 - Parcourez les produits disponibles et ajoutez-les à votre panier.
-- Passez vos commandes et suivez l'état de vos livraisons.
+- Passez vos commandes.
 - Connectez-vous à l'interface d'administration via `http://localhost:8000/admin` pour gérer les produits et les commandes.
   
 ## Informations de connexion 
