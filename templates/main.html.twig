@@ -29,19 +29,19 @@
                 </form>
             {% endif %}
             <div class="navig d-flex align-items-center justify-content-center flex-row gap-2">
-               <a class="pages" style="{{app.current_route == 'articles.index' ? 'color:blue' : ''}}" class="" href="{{ path('articles.index') }}">Nos articles</a>
-               <a class="pages" style="{{app.current_route starts with 'articles.paniers' ? 'color:blue' : ''}}" class="" href="{{ path('articles.paniers') }}">Votre panier</a>
-               {% if app.user %}
-                    <a class="pages" href="{{ path('user.profil.main') }}">Votre profil</a>
-               {% endif %}
-               {% if app.user %}
-                   <form action="{{path('app.logout')}}" method="POST">
-                       <input type="submit" class="btn btn-outline-danger" value="Se déconnecter">
-                   </form>
-               {% else %}
-                   <a href="{{path('app.login')}}" class="btn btn-primary">Se connecter</a>
-               {% endif %}
-                
+                <a class="pages" style="{{app.current_route == 'articles.index' ? 'color:blue' : ''}}" class="" href="{{ path('articles.index') }}">Nos articles</a>
+                <a class="pages" style="{{app.current_route starts with 'articles.paniers' ? 'color:blue' : ''}}" class="" href="{{ path('articles.paniers') }}">Votre panier</a>
+                <a class="pages" href="">Suggestion d'achat</a>
+                {% if app.user %}
+                        <a class="pages" href="{{ path('user.profil.main') }}">Votre profil</a>
+                {% endif %}
+                {% if app.user %}
+                    <form action="{{path('app.logout')}}" method="POST">
+                        <input type="submit" class="btn btn-outline-danger" value="Se déconnecter">
+                    </form>
+                {% else %}
+                    <a href="{{path('app.login')}}" class="btn btn-primary">Se connecter</a>
+                {% endif %}
             </div>
         </header>
         <div class="containers container-fluid">
