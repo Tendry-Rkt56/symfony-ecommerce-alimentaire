@@ -96,6 +96,7 @@ class ArticleController extends AbstractController
         return $this->redirectToRoute('articles.paniers');
     }
 
+    
     #[Route('/panier/store', name: 'panier.store', methods: ['POST'])]
     public function storePanier (EventDispatcherInterface $dispatcher, SessionInterface $session)
     {
@@ -113,5 +114,46 @@ class ArticleController extends AbstractController
         return $this->redirectToRoute('articles.index');
     }
 
+    private function suggestionsProducts(?float $budget = null, array $products = []): ?array
+    {
+        
+        if ($budget == null) return null;
+
+        shuffle($products);
+
+        $suggestions = [];
+        $total = 0;
+
+        foreach ($products as $product) {
+            if ($total + $product->getPrice() <= $budget) {
+                $suggestions[] = $product;
+                $total += $product->getPrice();
+            }
+        }
+
+        return $suggestions;
+    }
+
+    #[Route('/', name: 'suggestion', methods:['GET'])]
+    public function suggestion(Request $request, SessionInterface $session)
+    {
+        $budget = $request->query->get('budget');
+        $products = $this->entity->getRepository(Articles::class)->findAll();
+        $suggestions = $this->suggestionsProducts($budget, $products);
+        $total = 0;
+        if ($suggestions !== null) {
+            $ids = [];
+            foreach($suggestions as $product) {
+                $total += $product->getPrice();
+                $ids[] = $product->getId();
+            }
+            $session->set('suggestion', $ids);
+        }
+        return $this->render('user/product/suggestion.html.twig', [
+            'suggestions' => $suggestions,
+            'total' => $total,
+            'budget' => $budget ?? 0
+        ]);
+    }
 
 }
